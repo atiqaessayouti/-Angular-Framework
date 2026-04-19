@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
   }
 
   searchProducts(): void {
-    if (this.keyword.trim() === '') { this.loadProducts(); return; }
+    if (!this.keyword.trim()) { this.loadProducts(); return; }
     this.productService.searchProducts(this.keyword).subscribe({
       next: (data) => this.products = data,
       error: (err) => this.errorMessage = err.message
@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(id: number): void {
-    if (confirm('Confirmer la suppression ?')) {
+    if (confirm('Supprimer ce produit ?')) {
       this.productService.deleteProduct(id).subscribe({
         next: () => this.loadProducts(),
         error: (err) => this.errorMessage = err.message
@@ -45,5 +45,5 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(id: number): void { this.router.navigate(['/edit-product', id]); }
-  addProduct(): void { this.router.navigate(['/add-product']); }
+  newProduct(): void { this.router.navigate(['/new-product']); }
 }
